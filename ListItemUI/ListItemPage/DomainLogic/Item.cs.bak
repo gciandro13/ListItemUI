@@ -1,0 +1,68 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ListItemUI.ListItemPage.DomainLogic
+{
+
+
+    public interface IItem
+    {
+        string Label { get; }
+        int Number { get; }
+        string Comment { get; set; }
+        bool isSelected();
+        double Quantity { get; set; }
+        double Index { get; set; }
+        void select();
+    }
+
+
+
+
+
+    public class Item : IItem
+    {
+        private bool _selectedState;
+  
+
+	  public Item(string label,int number, double quantity, string comment, double index)
+        {
+            Label = label;
+            Number = number;
+            Comment = comment;
+            Quantity = quantity;
+            Index = index;
+            _selectedState = false;
+        }
+
+        public string Comment { get; set; }
+
+
+        public double Index { get; set; }
+
+        public string Label { get;}
+
+
+        public int Number { get; }
+
+        public double Quantity { get; set; }
+
+        public bool isSelected()
+        {
+            return _selectedState;
+        }
+
+        public void select()
+        {
+            if (_selectedState)
+            {
+                _selectedState = true;
+            }
+            else _selectedState = false;
+        }
+    }
+}
