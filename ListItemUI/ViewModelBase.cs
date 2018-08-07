@@ -43,6 +43,7 @@ namespace ListItemUI
             {
                 foreach (var disp in _disposables)
                     disp.Dispose();
+
                 // Dispose di tutti gli oggetti di cui sono owner
                 OnDisposeOwnedObject();
             }

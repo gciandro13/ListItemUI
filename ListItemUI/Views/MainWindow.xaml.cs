@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using ListItemUI.ViewModels;
 
-namespace ListItemUI
+namespace ListItemUI.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(IPageFactory itemPageFactory, IPageFactory infoPageFactory)
         {
+            /* Inizializzazione dei componenti. */
             InitializeComponent();
+            /* Creazione View Model associato alla finestra (MainWindowViewModel).
+             * Vengono passate le factory dei View Model delle due pagine, per permettere la creazione dei View Model internamente. */
+            var mainWindowVM = new MainWindowViewModel(itemPageFactory , infoPageFactory);
+            /* Associa il Data Context della View al View Model ottenuto. */
+            DataContext = mainWindowVM;
+            
         }
+
     }
 }

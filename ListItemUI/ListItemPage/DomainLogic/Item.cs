@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+using System;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+using ListItemUI.ListItemPage.Adapters;
+using ListItemUI.ListItemPage.ViewModels;
+using static ListItemUI.ListItemPage.DomainLogic.Item;
 
 namespace ListItemUI.ListItemPage.DomainLogic
 {
@@ -11,26 +11,23 @@ namespace ListItemUI.ListItemPage.DomainLogic
 
     public interface IItem
     {
+
         string Label { get; }
         int Number { get; }
         string Comment { get; set; }
         bool isSelected();
         double Quantity { get; set; }
-        double Index { get; set; }
+        int Index { get; set; }
         void select();
     }
 
-
-
-
-
     public class Item : IItem
     {
+        private readonly IItemRepository _itemrepo;
         private bool _selectedState;
-  
 
-
-	  public Item(string label,int number, double quantity, string comment, double index)
+                                           
+        public Item(string label,int number, double quantity, string comment, int index, IItemRepository itemrepo)
         {
             Label = label;
             Number = number;
@@ -38,24 +35,63 @@ namespace ListItemUI.ListItemPage.DomainLogic
             Quantity = quantity;
             Index = index;
             _selectedState = false;
+            _itemrepo = itemrepo;
+            // printIt();
         }
 
-        public string Comment { get; set; }
 
 
-        public double Index { get; set; }
+        private string _comment;
 
-        public string Label { get;}
+        public string Comment
+        {
+            get { return _comment; }
+            set { _comment = value; }
+        }
 
 
-        public int Number { get; }
+        private int _index;
 
-        public double Quantity { get; set; }
+        public int Index
+        {
+            get { return _index; }
+
+            set { _index = value; }
+        }
+
+
+        private string _label;
+
+        public string Label
+        {
+            get { return _label; }
+            set { _label = value; }
+        }
+
+        private int _number;
+
+        public int Number
+        {
+            get { return _number; }
+            set { _number = value; }
+        }
+
+
+        private double _quantity;
+
+        public double Quantity
+        {
+            get { return _quantity;}
+            set { _quantity = value; }
+        }
 
         public bool isSelected()
         {
             return _selectedState;
         }
+
+
+     
 
         public void select()
         {
@@ -65,5 +101,16 @@ namespace ListItemUI.ListItemPage.DomainLogic
             }
             else _selectedState = false;
         }
+    }
+
+    public class ItemChangedEventHandlerArgs
+    {
+        public IItem ChangedItem { get; }
+
+        public ItemChangedEventHandlerArgs(IItem changedItem)
+        {
+            ChangedItem = changedItem;
+        }
+
     }
 }

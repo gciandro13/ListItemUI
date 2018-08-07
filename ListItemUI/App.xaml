@@ -1,14 +1,22 @@
 ﻿<Application x:Class="ListItemUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ListItemUI">
-    <Application.Resources>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+</Application>
+
+
+
+    
+ <!--App.Xaml che gestisce i resourcedictionary (che sono stati eliminati)-->
+    
+    
+<!--<Application.Resources>
          <ResourceDictionary>
              <ResourceDictionary.MergedDictionaries>
                  <ResourceDictionary Source="ListItemPage/Views/ListItemPage.xaml"></ResourceDictionary>
-                 <!--GLOBAL RESOURCES -->
+                 <ResourceDictionary Source="InfoPage/Views/InfoView.xaml"></ResourceDictionary>
+                 --><!--GLOBAL RESOURCES --><!--
                  <ResourceDictionary Source="Views/GlobalResources.xaml"></ResourceDictionary>
              </ResourceDictionary.MergedDictionaries>
-         </ResourceDictionary>
-    </Application.Resources>
-</Application>
+         </ResourceDictionary>-->
+    <!--</Application.Resources>-->
+

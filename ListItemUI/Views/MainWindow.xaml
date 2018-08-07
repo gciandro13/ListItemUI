@@ -1,11 +1,108 @@
-﻿<Window x:Class="ListItemUI.MainWindow"
+﻿<Window x:Class="ListItemUI.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ListItemUI"
+        xmlns:viewModels ="clr-namespace:ListItemUI.ListItemPage.ViewModels"
+        xmlns:viewModels1 ="clr-namespace:ListItemUI.InfoPage.ViewModels"
+        xmlns:views="clr-namespace:ListItemUI.Views"
         mc:Ignorable="d"
-        Title="ListItemApplication" Height="350" Width="525">
+        Title="ListItemUI" Height="400" Width="600">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModels:ItemViewModel}">
+            <StackPanel>
+                <TextBlock Foreground="RoyalBlue" FontWeight="Bold">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat = "{}{0}  {1}  {2}    {3}">
+                            <Binding Path = "Index"></Binding>
+                            <Binding Path = "Quantity"></Binding>
+                            <Binding Path = "Comment"></Binding>
+                            <Binding Path = "Label"></Binding>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+              
+            </StackPanel>
+
+
+        </DataTemplate>
+
+
+        <DataTemplate DataType="{x:Type viewModels:DetailViewModel}">
+            <StackPanel>
+                <TextBlock Text="{Binding Path = LocalIndex}" Background="White" Foreground="Black"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+
+        
+        <DataTemplate DataType="{x:Type viewModels:ItemsPageViewModel}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <ListBox ItemsSource="{Binding Path = LocalItemViewModels}" IsSynchronizedWithCurrentItem="True" Margin="5" 
+                                 Background="#FFF0FFC4" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" 
+                                 ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedIndex="-1" BorderBrush="#FF252526" >
+                        </ListBox>
+                        
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                    
+                        
+                        <!--Soluzione alternativa-->
+                        <DockPanel LastChildFill="False">
+                            <Button Content="DELETE" DockPanel.Dock="Left" Width="75" Margin="2,2,2,2" Command ="{Binding Delete}" CommandParameter="{Binding Path=SelectedItem}"></Button>
+                            <!--<Button Content="ADD" DockPanel.Dock="Left" Width="75" Margin="2,2,2,2" ></Button>-->
+                            <Button Content="START FROM THIS" DockPanel.Dock="Right" Width="Auto" Margin="2,2,2,2" Command ="{Binding StartFromThis}" CommandParameter="{Binding Path=SelectedItem}"></Button>
+                        </DockPanel>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="1" Background="Red">
+                    <ListBox ItemsSource="{Binding Path = LocalItemViewModels/LclDetailViewModel}" Margin="5"></ListBox>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModels1:InfoPageViewModel}">
+            <Grid Background="Black">
+                <TextBlock Text="{Binding Path=Info}"  Margin="10" FontStyle="Italic" Foreground="White" ></TextBlock>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    
+        
     <Grid>
-    </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0">
+                
+                
+                <!--Soluzione alternativa-->
+                <DockPanel LastChildFill="False">
+                    <Button Content="ITEMS" DockPanel.Dock="Left" Width="50" Margin="8,8,4,4" Command ="{Binding SelectItemsPageViewModel}"></Button>
+                    <Button Content="HELP" DockPanel.Dock="Left" Width="50" Margin="8,8,4,4" Command ="{Binding SelectInfoPageViewModel}"></Button>
+                    <Button Content="CLEAR" DockPanel.Dock="Right" Width="75" Margin="4,8,8,4" Command ="{Binding ClearAll}"></Button>
+                </DockPanel>
+            </Grid>
+            <ContentControl Grid.Row="2" Content="{Binding CurrentPageViewModel}"/>
+        </Grid>
+   </Grid>
 </Window>
